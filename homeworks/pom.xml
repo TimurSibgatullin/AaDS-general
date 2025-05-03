@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lab-01-sorting</artifactId>
+    <artifactId>homeworks</artifactId>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>

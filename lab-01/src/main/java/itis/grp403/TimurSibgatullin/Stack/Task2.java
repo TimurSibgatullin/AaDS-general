@@ -1,4 +1,4 @@
-package itis.grp403.TimurSibgatullin;
+package itis.grp403.TimurSibgatullin.Stack;
 
 import java.util.Scanner;
 import java.util.Stack;

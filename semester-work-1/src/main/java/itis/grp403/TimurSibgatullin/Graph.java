@@ -3,43 +3,70 @@ package itis.grp403.TimurSibgatullin;
 import java.util.*;
 
 public class Graph {
-    Map<Integer, List<Integer>> graph;
-    List<Integer> visited;
-    int iterationCount;
-    long duration;
+    private Map<Integer, List<Integer>> graph;
+    private List<Integer> visited;
+    private Result result;
+    private static Random random = new Random();
 
+    private Map<Integer, List<Integer>> generateRandomGraph(int vertices, int edges) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        List<Integer> notConnected = new ArrayList<>();
+        List<Integer> connected = new ArrayList<>();
 
-    public Graph(Map<Integer, List<Integer>> graph) {
-        this.graph = graph;
-        this.visited = new ArrayList<>();
-        iterationCount = 0;
-        duration = 0;
+        for (int i = 0; i < vertices; i++) {
+            graph.put(i, new ArrayList<>());
+            notConnected.add(i);
+        }
+
+        connected.add(notConnected.remove(random.nextInt(vertices)));
+        for (int i = 0; i < edges; i++) {
+            int fromIdx = 0;
+            Integer first = null;
+            Integer second = null;
+            if (!notConnected.isEmpty()) {
+                first = notConnected.get(random.nextInt(notConnected.size()));
+                notConnected.remove(first);
+                second = connected.get(random.nextInt(connected.size()));
+            } else {
+                first = random.nextInt(vertices);
+                second = random.nextInt(vertices);
+            }
+            if (!Objects.equals(first, second)) {
+                graph.get(first).add(second);
+                graph.get(second).add(first);
+            }
+        }
+        return graph;
     }
 
-    public List<Integer> BFS(Integer vertex) {
+    public Graph(int vertices, int edges) {
+        result = new Result(vertices, edges);
+        this.graph = generateRandomGraph(vertices, edges);
+        this.visited = new ArrayList<>();
+    }
+
+    public List<Integer> BFS(Integer startVertice) {
         Queue<Integer> readyToBurn = new LinkedList<>();
-        this.iterationCount = 0;
+        int iterationCount = 0;
         long startTime = System.nanoTime();
-        readyToBurn.add(vertex);
+        readyToBurn.add(startVertice);
         while (!readyToBurn.isEmpty()) {
             visited.add(readyToBurn.peek());
             for (Integer descendant : graph.get(readyToBurn.poll())) {
-                this.iterationCount++;
+                iterationCount++;
                 if (!visited.contains(descendant) & !readyToBurn.contains(descendant)) {
                     readyToBurn.add(descendant);
                 }
             }
         }
         long endTime = System.nanoTime();
-        duration = endTime - startTime;
+        long duration = endTime - startTime;
+        result.setTimeMillis(duration);
+        result.setSteps(iterationCount);
         return visited;
     }
 
-    public int getIterationCount() {
-        return iterationCount;
-    }
-
-    public long getDuration() {
-        return duration;
+    public Result getStats() {
+        return result;
     }
 }

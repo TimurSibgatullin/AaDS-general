@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Graph {
     private Map<Integer, List<Integer>> graph;
-    private List<Integer> visited;
+    private Set<Integer> visited;
     private Result result;
     private static Random random = new Random();
 
@@ -42,20 +42,23 @@ public class Graph {
     public Graph(int vertices, int edges) {
         result = new Result(vertices, edges);
         this.graph = generateRandomGraph(vertices, edges);
-        this.visited = new ArrayList<>();
+        this.visited = new HashSet<>();
     }
 
-    public List<Integer> BFS(Integer startVertice) {
+    public Set<Integer> BFS(Integer startVertice) {
         Queue<Integer> readyToBurn = new LinkedList<>();
+        Set<Integer> inQueue = new HashSet<>();
         int iterationCount = 0;
         long startTime = System.nanoTime();
         readyToBurn.add(startVertice);
         while (!readyToBurn.isEmpty()) {
-            visited.add(readyToBurn.peek());
-            for (Integer descendant : graph.get(readyToBurn.poll())) {
+            Integer current = readyToBurn.poll();
+            visited.add(current);
+            for (Integer descendant : graph.get(current)) {
                 iterationCount++;
-                if (!visited.contains(descendant) & !readyToBurn.contains(descendant)) {
+                if (!visited.contains(descendant) && !inQueue.contains(descendant)) {
                     readyToBurn.add(descendant);
+                    inQueue.add(descendant);
                 }
             }
         }

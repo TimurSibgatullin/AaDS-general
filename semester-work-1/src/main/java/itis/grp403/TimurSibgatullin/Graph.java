@@ -46,19 +46,19 @@ public class Graph {
     }
 
     public Set<Integer> BFS(Integer startVertice) {
-        Queue<Integer> readyToBurn = new LinkedList<>();
-        Set<Integer> inQueue = new HashSet<>();
+        Queue<Integer> burning = new LinkedList<>();
         int iterationCount = 0;
         long startTime = System.nanoTime();
-        readyToBurn.add(startVertice);
-        while (!readyToBurn.isEmpty()) {
-            Integer current = readyToBurn.poll();
-            visited.add(current);
-            for (Integer descendant : graph.get(current)) {
+        burning.add(startVertice);
+        visited.add(startVertice);
+
+        while (!burning.isEmpty()) {
+            Integer current = burning.poll();
+            for (Integer descendant : graph.getOrDefault(current, List.of())) {
                 iterationCount++;
-                if (!visited.contains(descendant) && !inQueue.contains(descendant)) {
-                    readyToBurn.add(descendant);
-                    inQueue.add(descendant);
+                if (!visited.contains(descendant)) {
+                    burning.add(descendant);
+                    visited.add(descendant);
                 }
             }
         }

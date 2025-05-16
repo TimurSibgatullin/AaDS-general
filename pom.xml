@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>lab-01</module>
+        <module>labs</module>
         <module>homeworks</module>
         <module>semester-work-1</module>
     </modules>

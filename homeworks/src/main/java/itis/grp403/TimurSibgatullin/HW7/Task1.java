@@ -31,4 +31,11 @@ public class Task1 {
         }
         return bestTriplet;
     }
+
+    public static void main(String[] args) {
+        int[] nums = {8, 2, 5, 1, 9, 3, 7};
+        int t = 10;
+        int[] result = closestTripletNlogN(nums, t);
+        System.out.println("Result: " + Arrays.toString(result));
+    }
 }

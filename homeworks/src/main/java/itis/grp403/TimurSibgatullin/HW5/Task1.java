@@ -2,23 +2,23 @@ package itis.grp403.TimurSibgatullin.HW5;
 
 public class Task1 {
     public static String addBinary(String a, String b) {
-        int maxLength = Math.max(a.length(), b.length());
-        a = padLeft(a, maxLength);
-        b = padLeft(b, maxLength);
+        int a1 = Math.max(a.length(), b.length());
+        a = padLeft(a, a1);
+        b = padLeft(b, a1);
 
-        StringBuilder result = new StringBuilder();
-        int carry = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+        int c = 0;
 
-        for (int i = maxLength - 1; i >= 0; i--) {
-            int bitA = a.charAt(i) - '0';
-            int bitB = b.charAt(i) - '0';
-            int sum = bitA + bitB + carry;
-            result.insert(0, sum % 2);
-            carry = sum / 2;
+        for (int i = a1 - 1; i >= 0; i--) {
+            int bA = a.charAt(i) - '0';
+            int bB = b.charAt(i) - '0';
+            int sum = bA + bB + c;
+            stringBuilder.insert(0, sum % 2);
+            c = sum / 2;
         }
 
-        if (carry > 0) result.insert(0, '1');
-        return result.toString();
+        if (c > 0) stringBuilder.insert(0, '1');
+        return stringBuilder.toString();
     }
 
     public static String subtractBinary(String a, String b) {
@@ -30,15 +30,15 @@ public class Task1 {
         int borrow = 0;
 
         for (int i = maxLength - 1; i >= 0; i--) {
-            int bitA = a.charAt(i) - '0' - borrow;
-            int bitB = b.charAt(i) - '0';
-            if (bitA < bitB) {
-                bitA += 2;
+            int bA = a.charAt(i) - '0' - borrow;
+            int bB = b.charAt(i) - '0';
+            if (bA < bB) {
+                bA += 2;
                 borrow = 1;
             } else {
                 borrow = 0;
             }
-            result.insert(0, bitA - bitB);
+            result.insert(0, bA - bB);
         }
 
         return stripLeadingZeros(result.toString());
